@@ -2,24 +2,24 @@ const nodemailer = require('nodemailer');
 
 var ObjEmail;
 
-class Email{    
+class Email {
 
-    constructor(_Config){
+    constructor(_Config) {
 
         ObjEmail = nodemailer.createTransport(_Config);
 
     }
 
-    enviarCorreo(Mensaje){
+    enviarCorreo(Mensaje) {
 
-            ObjEmail.sendMail(Mensaje, function(errores){
+        ObjEmail.sendMail(Mensaje, function(errores) {
 
-                if(errores){
-                    console.log('Error al enviar...' + errores);
-                }
+            if (errores) {
+                console.log('Error al enviar...' + errores);
+            }
 
-                console.log('Enviado...');
-            });
+            console.log('Enviado...');
+        });
 
     }
 
