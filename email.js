@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const { GetDatos, ActualizarStatus } = require('./DB');
 
 var ObjEmail;
 
@@ -10,15 +11,20 @@ class Email {
 
     }
 
-    enviarCorreo(Mensaje) {
+    enviarCorreo(Mensaje, Info) {
 
         ObjEmail.sendMail(Mensaje, function(errores) {
 
             if (errores) {
-                console.log('Error al enviar...' + errores);
-            }
+                console.log(('Error al enviar...' + errores).red);
+                ActualizarStatus({ IdEmail: Info.IdEmail, Comentarios: errores }).then(Datos => {;
+                }).catch(err => console.log(err.red));
+            } else {
 
-            console.log('Enviado...');
+                console.log(('Enviando...' + Info.No + ' de ' + Info.Total).green);
+                ActualizarStatus({ IdEmail: Info.IdEmail, Comentarios: 'Ok' }).then(Datos => {;
+                }).catch(err => console.log(err.red));
+            }
         });
 
     }

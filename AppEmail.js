@@ -1,8 +1,7 @@
 const email = require('./email');
-//const DB = require('./DBConexion');
 const { GetDatos } = require('./DB');
-
-// const _DB = new DB();
+const sleep = require('system-sleep');
+const colors = require('colors');
 
 var Cuenta = 'gesa@playaresorts.com';
 const _Email = new email({
@@ -19,17 +18,37 @@ const _Email = new email({
     requireTLS: true
 });
 
-let Mensaje = {
-    from: Cuenta,
-    to: 'mariotuz1990@gmail.com',
-    subject: 'Prueba Correo',
-    html: '<h1>Mi mensaje!</h1><br/><span> Prueba mensaje en span</span><h2>Mario Tuz</h2>'
-        //,
-        // attachments: [{
-        //     path: '/home/matrix/Descargas/Ejemplo.pdf'
-        // }]
+ConstruyeCorreos = function(Datos) {
+
+    for (let i = 0; i < Datos.length; i++) {
+        const mail = Datos[i];
+        let Mensaje = {
+            from: Cuenta,
+            to: 'mariotuz1990@gmail.com',
+            subject: mail.Subject,
+            html: mail.Body
+                //,
+                // attachments: [{
+                //     path: '/home/matrix/Descargas/Ejemplo.pdf'
+                // }]
+        }
+
+        let Info = { IdEmail: mail.Id_Email, No: i + 1, Total: Datos.length }
+        _Email.enviarCorreo(Mensaje, Info);
+        sleep(3000);
+    }
 }
 
+var Minutos = 2;
 
-GetDatos('Hola').then(Datos => console.log(Datos))
-    .catch(err => console.log(err));
+console.log('===== Envio de correos GESA ====='.green);
+
+while (true) {
+    console.log('===== Ciclo reiniciado ====='.blue);
+
+    GetDatos('').then(Datos => {
+        ConstruyeCorreos(Datos)
+    }).catch(err => console.log(err));
+
+    sleep(2 * 60 * 1000);
+}
