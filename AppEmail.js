@@ -24,7 +24,7 @@ ConstruyeCorreos = function(Datos) {
         const mail = Datos[i];
         let Mensaje = {
             from: Cuenta,
-            to: 'mariotuz1990@gmail.com',
+            to: mail.Titular,
             subject: mail.Subject,
             html: mail.Body
                 //,
@@ -50,5 +50,5 @@ while (true) {
         ConstruyeCorreos(Datos)
     }).catch(err => console.log(err));
 
-    sleep(2 * 60 * 1000);
+    sleep(Minutos * 60 * 1000);
 }
