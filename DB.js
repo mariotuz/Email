@@ -5,6 +5,11 @@ var dbConfig = {
     connectionString: 'Driver={SQL Server Native Client 11.0};Server={sysapp001};Database=gesa;Trusted_Connection={yes};'
 };
 
+// var dbConfig = {
+//     driver: 'msnodesqlv8',
+//     connectionString: 'Data Source=sysapp001;User Id=usr_grupos;Password=p_grupos;Initial Catalog=gesa;Integrated Security=True";'
+// };
+
 let GetDatos = (Cuantos) => {
 
     return new Promise((resolve, reject) => {
